@@ -129,6 +129,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="cJSON.c" />
+    <ClCompile Include="infos.c" />
     <ClCompile Include="main.c">
       <DeploymentContent>false</DeploymentContent>
     </ClCompile>
@@ -136,6 +137,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cJSON.h" />
+    <ClInclude Include="infos.h" />
     <ClInclude Include="utils.h" />
   </ItemGroup>
   <ItemGroup>
