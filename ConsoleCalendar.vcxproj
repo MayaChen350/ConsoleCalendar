@@ -129,16 +129,22 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="cJSON.c" />
+    <ClCompile Include="const.c" />
+    <ClCompile Include="day.c" />
     <ClCompile Include="infos.c" />
     <ClCompile Include="main.c">
       <DeploymentContent>false</DeploymentContent>
     </ClCompile>
     <ClCompile Include="utils.c" />
+    <ClCompile Include="week.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cJSON.h" />
+    <ClInclude Include="const.h" />
+    <ClInclude Include="day.h" />
     <ClInclude Include="infos.h" />
     <ClInclude Include="utils.h" />
+    <ClInclude Include="week.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include=".gitignore" />

@@ -1,28 +1,28 @@
 #include <stdio.h>
 #include <time.h>
 #include "utils.h"
+#include "const.h"
 #include "infos.h"
+#include "day.h"
+#include "week.h"
 
-struct tm date;
-char w_days[7][5]; // Used to store and display 7 days in a week with 2 digits.
-int* curr_month;
-int* curr_weekday;
-const int DAY_IN_SECONDS = 86400;
+#define TRUE 1
+#define FALSE 0
 
+time_t t_default; // A time_t of the current date.
 
 void main_menu();
 void week_menu();
 void month_menu();
-void print_week(struct tm date_to_change);
-void print_month(struct tm date_to_change);
+void print_week(time_t date_to_change);
+void print_month(time_t date_to_change);
 
 int main()
 {
-	time_t t = time(NULL);
-	date = *localtime(&t);
-	curr_month = &(date.tm_mon);
-	curr_weekday = &(date.tm_wday);
-	printf("Today is %d %s, %s %d.\n\n", date.tm_year + 1900, get_month(curr_month), get_weekday(curr_weekday), date.tm_mday);
+	t_default = time(NULL);
+	set_date(t_default);
+
+	printf("Today is %d %s, %s %d.\n\n", var_day.tm_year + 1900, get_month(&var_day.tm_mon), get_weekday(&var_day.tm_wday), var_day.tm_mday);
 
 	main_menu();
 	return 0;
@@ -39,21 +39,22 @@ void main_menu()
 		switch (toupper(cmd))
 		{
 		case 'W':
-			print_week(date);
+			print_week(t_default);
 			week_menu();
 			break;
 		case 'M':
-			print_month(date);
+			print_month(t_default);
 			month_menu();
 			break;
 		case 'C':
-			if (date.tm_min < 10)
+			set_date(t_default);
+			if (var_day.tm_min < 10)
 			{
-				printf("%d:0%d\n", date.tm_hour, date.tm_min);
+				printf("%d:0%d\n", var_day.tm_hour, var_day.tm_min);
 			}
 			else
 			{
-				printf("%d:%d\n", date.tm_hour, date.tm_min);
+				printf("%d:%d\n", var_day.tm_hour, var_day.tm_min);
 			}
 			main_menu();
 			break;
@@ -143,59 +144,28 @@ void month_menu()
 	}
 }
 
-void print_week(struct tm date_to_change)
+void print_week(time_t date)
 {
-	time_t t = time(NULL);
-	while (date_to_change.tm_wday != 0)
-	{
-		t -= DAY_IN_SECONDS; // Remove 1 day
-		date_to_change = *localtime(&t);
-	}
+	set_date(date);
 
-	printf("\n[%d]    [%d]    [%d]    [%d]    [%d]    [%d]    [%d]\n\n", date_to_change.tm_mday, date_to_change.tm_mday + 1, date_to_change.tm_mday + 2, date_to_change.tm_mday + 3, date_to_change.tm_mday + 4, date_to_change.tm_mday + 5, date_to_change.tm_mday + 6);
+	get_curr_week(FALSE);
+
+	printf("\n%s    %s    %s    %s    %s    %s    %s\n", *w_days, *(w_days + 1), *(w_days + 2), *(w_days + 3), *(w_days + 4), *(w_days + 5), *(w_days + 6));
 }
 
-void print_month(struct tm date_to_change)
+void print_month(time_t date)
 {
-	time_t t = time(NULL);
+	set_date(date);
 
 	// Get the first day of the month
-
-	while (date_to_change.tm_mday != 1)
+	while (var_day.tm_mday != 1)
 	{
-		t -= DAY_IN_SECONDS; // Remove 1 day
-		date_to_change = *localtime(&t);
+		set_prec_day(1);
 	}
 
-	// Get the last sunday
-	while (date_to_change.tm_wday != 0)
+	for (int i = 0; i < 5; i++)
 	{
-		t -= DAY_IN_SECONDS; // Remove 1 day
-		date_to_change = *localtime(&t);
-	}
-
-	while (date_to_change.tm_mon < *curr_month + 1)
-	{
-		// Get the next 7 days
-		for (int i = 0; i < 7; i++)
-		{
-			t += DAY_IN_SECONDS; // Add 1 day
-			date_to_change = *localtime(&t);
-
-			if (date_to_change.tm_mon == *curr_month)
-			{
-				if (date_to_change.tm_mday < 10)
-				{
-					snprintf(w_days[i], sizeof(w_days[i]), "[0%d]", date_to_change.tm_mday);
-				}
-				else
-				{
-					snprintf(w_days[i], sizeof(w_days[i]), "[%d]", date_to_change.tm_mday);
-				}
-			}
-			else
-				snprintf(w_days[i], sizeof(w_days[i]), "    ", date_to_change.tm_mday);
-		}
+		get_curr_week(TRUE);
 
 		printf("\n%s    %s    %s    %s    %s    %s    %s\n", *w_days, *(w_days + 1), *(w_days + 2), *(w_days + 3), *(w_days + 4), *(w_days + 5), *(w_days + 6));
 	}

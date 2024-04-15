@@ -27,6 +27,15 @@
     <ClCompile Include="infos.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="day.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="week.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="const.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="utils.h">
@@ -36,6 +45,15 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="infos.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="day.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="const.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="week.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
