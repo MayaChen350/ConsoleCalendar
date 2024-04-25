@@ -14,8 +14,8 @@ time_t t_default; // A time_t of the current date.
 void main_menu();
 void week_menu();
 void month_menu();
-void print_week(time_t date_to_change);
-void print_month(time_t date_to_change);
+void print_week();
+void print_month();
 
 int main()
 {
@@ -31,6 +31,7 @@ int main()
 // Call the main menu.
 void main_menu()
 {
+	set_date(t_default);
 	printf("MAIN MENU\n W - Show the current week.\n M - Show the current month.\n C - Show the current time.\n Z - Show more options.\n> ");
 	char cmd;
 	if (scanf("%c", &cmd) >= 1)
@@ -39,15 +40,14 @@ void main_menu()
 		switch (toupper(cmd))
 		{
 		case 'W':
-			print_week(t_default);
+			print_week();
 			week_menu();
 			break;
 		case 'M':
-			print_month(t_default);
+			print_month();
 			month_menu();
 			break;
 		case 'C':
-			set_date(t_default);
 			if (var_day.tm_min < 10)
 			{
 				printf("%d:0%d\n", var_day.tm_hour, var_day.tm_min);
@@ -89,10 +89,14 @@ void week_menu()
 			week_menu();
 			break;
 		case 'B':
-			printf("Not implemented yet");
+			set_prec_day(14);
+			print_week();
+			week_menu();
 			break;
 		case 'A':
-
+			set_next_day(6);
+			print_week();
+			week_menu();
 			break;
 		case 'M':
 			main_menu();
@@ -112,6 +116,7 @@ void week_menu()
 void month_menu()
 {
 	printf("MONTH MENU\n D - Show the events of a certain day.\n B - Go to last month.\n A - Go to next month.\n M - Return to main menu.\n> ");
+	int curr_mon = var_day.tm_mon;
 	char cmd;
 	if (scanf("%c", &cmd) >= 1)
 	{
@@ -121,13 +126,33 @@ void month_menu()
 		{
 		case 'D':
 			printf("Not implemented yet");
-			week_menu();
+			month_menu();
 			break;
 		case 'B':
-			printf("Not implemented yet");
+			while (var_day.tm_mon == curr_mon)
+			{
+				set_prec_day(1);
+			}
+			curr_mon = var_day.tm_mon;
+			print_month();
+			while (var_day.tm_mon != curr_mon)
+			{
+				set_prec_day(1);
+			}
+			month_menu();
 			break;
 		case 'A':
-
+			while (var_day.tm_mon == curr_mon)
+			{
+				set_next_day(1);
+			}
+			curr_mon = var_day.tm_mon;
+			print_month();
+			while (var_day.tm_mon != curr_mon)
+			{
+				set_prec_day(1);
+			}
+			month_menu();
 			break;
 		case 'M':
 			main_menu();
@@ -144,24 +169,22 @@ void month_menu()
 	}
 }
 
-void print_week(time_t date)
+void print_week()
 {
-	set_date(date);
-
 	get_curr_week(FALSE);
 
 	printf("\n%s    %s    %s    %s    %s    %s    %s\n", *w_days, *(w_days + 1), *(w_days + 2), *(w_days + 3), *(w_days + 4), *(w_days + 5), *(w_days + 6));
 }
 
-void print_month(time_t date)
+void print_month()
 {
-	set_date(date);
-
 	// Get the first day of the month
 	while (var_day.tm_mday != 1)
 	{
 		set_prec_day(1);
 	}
+
+	printf("\n| %s %d |\n", get_month(&var_day.tm_mon), var_day.tm_year + 1900);
 
 	for (int i = 0; i < 5; i++)
 	{
