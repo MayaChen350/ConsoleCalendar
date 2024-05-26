@@ -9,8 +9,6 @@
 #define TRUE 1
 #define FALSE 0
 
-time_t t_default; // A time_t of the current date.
-
 void main_menu();
 void week_menu();
 void month_menu();
@@ -19,8 +17,7 @@ void print_month();
 
 int main()
 {
-	t_default = time(NULL);
-	set_date(t_default);
+	set_date(time(NULL));
 
 	printf("Today is %d %s, %s %d.\n\n", var_day.tm_year + 1900, get_month(&var_day.tm_mon), get_weekday(&var_day.tm_wday), var_day.tm_mday);
 
@@ -31,7 +28,7 @@ int main()
 // Call the main menu.
 void main_menu()
 {
-	set_date(t_default);
+	set_date(time(NULL));
 	printf("MAIN MENU\n W - Show the current week.\n M - Show the current month.\n C - Show the current time.\n Z - Show more options.\n> ");
 	char cmd;
 	if (scanf("%c", &cmd) >= 1)
@@ -184,13 +181,24 @@ void print_month()
 		set_prec_day(1);
 	}
 
+	int temp_month = var_day.tm_mon; // The month of the printed month
+
 	printf("\n| %s %d |\n", get_month(&var_day.tm_mon), var_day.tm_year + 1900);
 
-	for (int i = 0; i < 5; i++)
+	for (int i = 0; i < 6; i++)
 	{
 		get_curr_week(TRUE);
 
 		printf("\n%s    %s    %s    %s    %s    %s    %s\n", *w_days, *(w_days + 1), *(w_days + 2), *(w_days + 3), *(w_days + 4), *(w_days + 5), *(w_days + 6));
+
+		if (var_day.tm_mon != temp_month)
+			break;
 	}
 	printf("\n");
+
+	// Go back to the month it was
+	while (var_day.tm_mon != temp_month)
+	{
+		set_prec_day(1);
+	}
 }
