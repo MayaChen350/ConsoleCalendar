@@ -19,7 +19,7 @@ int main()
 {
 	set_date(time(NULL));
 
-	printf("Today is %d %s, %s %d.\n\n", var_day.tm_year + 1900, get_month(&var_day.tm_mon), get_weekday(&var_day.tm_wday), var_day.tm_mday);
+	printf("Today is %d %s, %s %d.\n\n", var_day.tm_year + 1900, get_month(var_day.tm_mon), get_weekday(var_day.tm_wday), var_day.tm_mday);
 
 	main_menu();
 	return 0;
@@ -183,7 +183,7 @@ void print_month()
 
 	int temp_month = var_day.tm_mon; // The month of the printed month
 
-	printf("\n| %s %d |\n", get_month(&var_day.tm_mon), var_day.tm_year + 1900);
+	printf("\n| %s %d |\n", get_month(var_day.tm_mon), var_day.tm_year + 1900);
 
 	for (int i = 0; i < 6; i++)
 	{
