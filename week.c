@@ -4,8 +4,6 @@
 
 char w_days[7][5];
 
-void get_curr_week(int only_curr_mdays);
-
 void get_curr_week(int only_curr_mdays)
 {
 	int curr_month = var_day.tm_mon;

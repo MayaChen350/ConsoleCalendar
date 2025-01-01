@@ -131,6 +131,7 @@
     <ClCompile Include="cJSON.c" />
     <ClCompile Include="const.c" />
     <ClCompile Include="day.c" />
+    <ClCompile Include="event.c" />
     <ClCompile Include="infos.c" />
     <ClCompile Include="main.c">
       <DeploymentContent>false</DeploymentContent>
@@ -142,6 +143,7 @@
     <ClInclude Include="cJSON.h" />
     <ClInclude Include="const.h" />
     <ClInclude Include="day.h" />
+    <ClInclude Include="event.h" />
     <ClInclude Include="infos.h" />
     <ClInclude Include="utils.h" />
     <ClInclude Include="week.h" />

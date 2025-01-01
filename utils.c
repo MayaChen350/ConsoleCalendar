@@ -1,7 +1,5 @@
 #include <stdio.h>
 
-void clear_input_buffer();
-
 void clear_input_buffer()
 {
 	char c;

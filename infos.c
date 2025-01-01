@@ -1,7 +1,3 @@
-char* get_month(int month);
-char* get_weekday(int weekday);
-
-// Get the month index converted to a string.
 char* get_month(int month)
 {
 	switch (month)
@@ -45,7 +41,6 @@ char* get_month(int month)
 	}
 }
 
-// Get the month index converted to a string.
 char* get_weekday(int weekday)
 {
 	switch (weekday)
